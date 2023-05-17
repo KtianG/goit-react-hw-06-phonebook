@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
+import { useSelector, useDispatch } from 'react-redux';
+
 import css from './App.module.css';
 import { nanoid } from 'nanoid';
 
@@ -52,33 +54,13 @@ export const App = () => {
     localStorage.setItem('contacts', JSON.stringify(new_array));
   };
 
-  const filterContacts = () => {
-    const filteredContacts = contacts.filter(({ name }) =>
-      name.toLowerCase().includes(filter.toLowerCase())
-    );
-    return filteredContacts;
-  };
-
-  useEffect(() => {
-    const contacts_storage = localStorage.getItem('contacts');
-    if (contacts_storage != null) {
-      const contacts_array = JSON.parse(contacts_storage);
-      setContacts(contacts_array);
-    } else {
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const filteredContacts = filterContacts();
-
   return (
     <div className={css.app}>
       <h1>Phonebook</h1>
       <ContactForm handleSubmit={handleSubmitNewContact} />
       <h2>Contacts</h2>
       <Filter handleInput={setFilter} />
-      <ContactList contacts={filteredContacts} removeContact={removeContact} />
+      <ContactList removeContact={removeContact} />
     </div>
   );
 };

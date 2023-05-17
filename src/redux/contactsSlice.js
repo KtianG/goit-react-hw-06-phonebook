@@ -27,6 +27,7 @@ const contactsSlice = createSlice({
           alert(`${action.payload.name} is already in contacts`);
         } else {
           state.push(action.payload);
+          localStorage.setItem('contacts', JSON.stringify(state));
         }
       },
       prepare({ name, number }) {

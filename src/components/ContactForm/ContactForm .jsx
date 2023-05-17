@@ -1,8 +1,24 @@
 import React from 'react';
-import css from './ContactForm.module.css';
-import PropTypes from 'prop-types';
 
-export const ContactForm = ({ handleSubmit }) => {
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
+
+import css from './ContactForm.module.css';
+
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const name = form.elements.name.value;
+    const number = form.elements.number.value;
+
+    const new_contact = { name: name, number: number };
+    dispatch(addContact(new_contact));
+    form.reset();
+  };
+
   return (
     <form className={css.contactForm} onSubmit={e => handleSubmit(e)}>
       <h3>Name</h3>
@@ -28,8 +44,4 @@ export const ContactForm = ({ handleSubmit }) => {
       </button>
     </form>
   );
-};
-
-ContactForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
 };

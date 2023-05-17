@@ -20,14 +20,7 @@ export const ContactList = ({ removeContact }) => {
   const filteredContacts = getFilteredContacts(contacts, filter);
 
   const renderContactList = ({ id, name, number }) => {
-    return (
-      <ContactListElement
-        key={id}
-        name={name}
-        number={number}
-        removeContact={removeContact}
-      />
-    );
+    return <ContactListElement key={id} id={id} name={name} number={number} />;
   };
 
   return (
